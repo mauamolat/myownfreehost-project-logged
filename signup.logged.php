@@ -33,7 +33,7 @@ echo '
                             <i class="material-icons">person</i>
                             </span>
                             <div class="form-line">
-                                <input type="text" class="form-control" name="username" placeholder="'.$language['your-name'].'.'.$config["Reseller Domain"].'" required value="">
+                                <input type="text" class="form-control" name="username" placeholder="'.$language['your-name'].'.'.$config["Reseller Domain"].'" maxlength="16" onkeyup="return ismaxlength(this)" required value="">
                             </div>
                         </div>
                         <div class="input-group">
@@ -49,7 +49,7 @@ echo '
                             <i class="material-icons">lock</i>
                             </span>
                             <div class="form-line">
-                                <input type="password" class="form-control" name="password" minlength="6" placeholder="'.$language["Password"].'" required>
+                                <input type="password" class="form-control" name="password" minlength="6" placeholder="'.$language["Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onblur="matchPassword("1", this.value)" required>
                             </div>
                         </div>
                         <div class="input-group">
@@ -57,26 +57,31 @@ echo '
                             <i class="material-icons">lock</i>
                             </span>
                             <div class="form-line">
-                                <input type="password" class="form-control" name="password_confirmation" minlength="6" placeholder="'.$language["Confirm Password"].'" required>
+                                <input type="password" class="form-control" name="password_confirmation" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onblur="matchPassword("2", this.value)" required>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <tr>
-                                <th>Site Category
-                                <td>
-                                    <select  class="form-control" size="1" name="website_category">
-                                        <option>Personal</option>
-                                        <option>Business</option>
-                                        <option>Hobby</option>
-                                        <option>Forum</option>
-                                        <option>Adult</option>
-                                        <option>Dating</option>
-                                        <option>Software / Download</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </div>
-                        <div class="form-group">
+                        </div>'.PHP_EOL;
+
+                        if($config['Enable Site Category Option'] == true){
+                            echo '<div class="form-group">
+                                <tr>
+                                    <th>Site Category
+                                    <td>
+                                        <select  class="form-control" size="1" name="website_category">
+                                            <option>Personal</option>
+                                            <option>Business</option>
+                                            <option>Hobby</option>
+                                            <option>Forum</option>
+                                            <option>Adult</option>
+                                            <option>Dating</option>
+                                            <option>Software / Download</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </div>'.PHP_EOL;
+                        }
+
+                        if($config['Enable Site Language Option'] == true){
+                            echo '<div class="form-group">
                             <tr>
                                 <th>Site Language
                                 <td>
@@ -86,33 +91,20 @@ echo '
                                     </select>
                                 </td>
                             </tr>
-                        </div>
+                        </div>'.PHP_EOL;
+                        }
+                        
+                        echo '
+                        <input type="hidden" name="id" value="58688f1a8e0f4fa84dffb550b62d80608427e">
+                        <img width="100%" src="https://securesignup.net/image.php?id=58688f1a8e0f4fa84dffb550b62d80608427e">
                         <div class="input-group">
                             <span class="input-group-addon">
                             <i class="material-icons">lock</i>
                             </span>
                             <div class="form-line">
-                                <input type="password" class="form-control" name="password_confirmation" minlength="6" placeholder="'.$language["Confirm Password"].'" required>
+                                <input type="text" class="form-control" name="captcha" placeholder="'.$language["Enter Captcha"].'" required>
                             </div>
                         </div>
-                        <span class="input-group-addon">
-                            <i class="material-icons">lock</i>
-                            </span>
-                            <div class="form-line">
-                                <input type="hidden" name="id" value="{GLOBAL_ID}>">
-                                <tr>
-                                    <th>
-                                    <td>
-                                        <div ><img width="320px" height="90px" src="{GLOBAL_ID}/image.php?id={GLOBAL_ID}"></div>
-                                    <td>
-                                <tr>
-                                    <th>Enter Captcha
-                                    <td><input class="form-control text-align: center;" type="text" name="number" size="30">
-                                    <td>
-                                    </td>
-                                </tr>
-                                </td>
-                            </div>
                         <div class="form-group">
                             <input type="checkbox" name="terms_of_service" id="terms" class="filled-in chk-col-'.$config['Color Scheme'].'">
                             <label for="terms">'.$language["I've read and agree to the"].' <a href="'.$config['domain'].'/terms">'.$language["terms of service"].'</a>.</label>
@@ -127,6 +119,7 @@ echo '
             </div>
         </div>
         <script src="/material.logged.js"></script>
+        <script src="/custom.logged.js"></script>
     </body>
 </html>';
 

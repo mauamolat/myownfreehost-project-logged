@@ -20,11 +20,13 @@ $language = array(
     'Email Address' => 'Email Address',
     'Password' => 'Password',
     'Confirm Password' => 'Confirm Password',
-    'I\'ve read and agree to the' => 'I\'ve read and agree to the',
+    "I've read and agree to the" => "I've read and agree to the",
     'terms of service' => 'terms of service',
     'SIGN UP' => 'SIGN UP',
     'Already have a membership' => 'Already have a membership',
     'your-name' => 'your-name',
+    'Enter Captcha' => 'Enter Captcha',
+
     
 );
 
