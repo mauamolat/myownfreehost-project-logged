@@ -1,0 +1,5 @@
+RewriteEngine on
+
+# AUTHENICATION SYSTEM
+RewriteRule ^login/?$ login.logged.php [NC,L]
+RewriteRule ^signup/?$ signup.logged.php [NC,L]

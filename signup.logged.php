@@ -3,6 +3,10 @@
 $inc_config = true;
 require_once 'config.logged.php';
 
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    
+}
+
 echo '
 <!DOCTYPE html>
 <html>
@@ -62,26 +66,26 @@ echo '
                         </div>'.PHP_EOL;
 
                         if($config['Enable Site Category Option'] == true){
-                            echo '<div class="form-group">
-                                <tr>
-                                    <th>Site Category
-                                    <td>
-                                        <select  class="form-control" size="1" name="website_category">
-                                            <option>Personal</option>
-                                            <option>Business</option>
-                                            <option>Hobby</option>
-                                            <option>Forum</option>
-                                            <option>Adult</option>
-                                            <option>Dating</option>
-                                            <option>Software / Download</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </div>'.PHP_EOL;
+                            echo '                        <div class="form-group">
+                            <tr>
+                                <th>Site Category
+                                <td>
+                                    <select  class="form-control" size="1" name="website_category">
+                                        <option>Personal</option>
+                                        <option>Business</option>
+                                        <option>Hobby</option>
+                                        <option>Forum</option>
+                                        <option>Adult</option>
+                                        <option>Dating</option>
+                                        <option>Software / Download</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </div>'.PHP_EOL;
                         }
 
                         if($config['Enable Site Language Option'] == true){
-                            echo '<div class="form-group">
+                            echo '                        <div class="form-group">
                             <tr>
                                 <th>Site Language
                                 <td>
