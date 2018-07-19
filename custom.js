@@ -35,11 +35,9 @@ function checkPwdLength(validate=true){
 
 }
 
-function checkDomainLength(){
+function checkDomainLength(validate=true){
 
 	var domain = document.getElementById("username").value;
-
-	if()
 
 	if(domain.length >= 3 && domain.length <= 16){
         document.getElementById("username_warn").style.display = "none";
@@ -68,7 +66,7 @@ function checkDomainLength(){
 
 }
 
-function checkEmailValidity() {
+function checkEmailValidity(validate=true) {
 
 	var email = document.getElementById("email").value;
 
@@ -77,16 +75,38 @@ function checkEmailValidity() {
   	if(re.test(email)){
   		document.getElementById("email_warn").style.display = "none";
         document.getElementById("input_email").className = 'form-line focused';
+        if(validate == true){
+        	validateForm();
+        }
         return true;
   	}else{
   		document.getElementById("email_warn").innerHTML = "Email is invalid! Please enter a valid email.";
         document.getElementById("email_warn").style.display = "block";
         document.getElementById("input_email").className = 'form-line focused error';
+        if(validate == true){
+        	validateForm();
+        }
   		return false;
   	}
 
 }
 
+function checkDomainAvailability(){
+	// Initialize QUID:Open-API Project
+	// Call -> QUID:API->availability
+	// Response -> Catch
+	// if Response == available : {tell:Available} ? {tell:Taken}
+}
+
 function validateForm(){
+
+	console.log("Validation called");
+
+	var captcha = document.getElementById("captcha").value;
+	var agreedToTerms = document.getElementById("terms").checked;
 	
+	if(checkDomainLength(false) && checkEmailValidity(false) && checkPwdLength(false) && captcha != '' && agreedToTerms){
+		document.getElementById('signupBtn').removeAttribute('disabled');
+	}
+
 }

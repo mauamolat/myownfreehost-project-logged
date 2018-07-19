@@ -24,6 +24,20 @@ $config = array(
 
 );
 
+$config_pro = array(
+
+    'Enable MILD API' => true, 
+
+);
+
+$mild_api = array(
+
+    'iKey' => 'String',
+    'API Username' => 'String',
+    'API Password' => 'String', 
+
+);
+
 /* Stop Editting after this line! */
 
 # Check if config is set properly

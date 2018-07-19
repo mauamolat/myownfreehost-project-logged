@@ -63,7 +63,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">lock</i>
 	                            </span>
 	                            <div id="input_password_confirm" class="form-line">
-	                                <input id="password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onblur="matchPassword()" required>
+	                                <input id="password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onblur="" required>
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="password_confirm_notMatched">{WARNING}</small>
 	                        </div>'.PHP_EOL;
@@ -108,15 +108,15 @@ if($showPage == 'signup'){
 	                            <span class="input-group-addon">
 	                            <i class="material-icons">lock</i>
 	                            </span>
-	                            <div class="form-line">
-	                                <input type="text" class="form-control" name="captcha" placeholder="'.$language["Enter Captcha"].'" required>
+	                            <div id="input_captcha" class="form-line">
+	                                <input id="captcha" type="text" class="form-control" name="captcha" placeholder="'.$language["Enter Captcha"].'" onblur="validateForm();" required>
 	                            </div>
 	                        </div>
 	                        <div class="form-group">
-	                            <input type="checkbox" name="terms_of_service" id="terms" class="filled-in chk-col-'.$config['Color Scheme'].' onchange="validateForm();">
+	                            <input type="checkbox" name="terms_of_service" id="terms" class="filled-in chk-col-'.$config['Color Scheme'].' onclick="validateForm();" onchange="validateForm();">
 	                            <label for="terms">'.$language["I've read and agree to the"].' <a href="'.$config['domain'].'/terms">'.$language["terms of service"].'</a>.</label>
 	                        </div>
-	                        <button class="btn btn-block btn-lg bg-'.$config['Color Scheme'].' waves-effect" disabled>'.$language["SIGN UP"].'</button>
+	                        <button id="signupBtn" class="btn btn-block btn-lg bg-'.$config['Color Scheme'].' waves-effect" onclick="validateForm();" disabled>'.$language["SIGN UP"].'</button>
 	                        <div class="m-t-25 m-b--5 align-center">
 	                            <a href="'.$config["domain"].'/login">'.$language["Already have a membership"].'?</a>
 	                        </div>
