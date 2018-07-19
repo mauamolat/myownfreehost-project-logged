@@ -1,5 +1,10 @@
+# START PROJECT LOGGED
+
 RewriteEngine on
 
-# AUTHENICATION SYSTEM
-RewriteRule ^login/?$ login.logged.php [NC,L]
-RewriteRule ^signup/?$ signup.logged.php [NC,L]
+RewriteRule ^login/?$ load.login.logged.php [NC,L]
+RewriteRule ^signup/?$ load.signup.logged.php [NC,L]
+RewriteRule ^terms/?$ misc.logged.php?show=terms [NC,L]
+RewriteRule ^privacy/?$ misc.logged.php?show=privacy [NC,L]
+
+# END PROJECT LOGGED

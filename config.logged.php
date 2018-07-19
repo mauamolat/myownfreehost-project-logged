@@ -15,7 +15,7 @@ $config = array(
     'Primary Site URL' => 'http://planetcloudhosting.cf/',
 
     # System Configuration
-    'Language' => 'en', 
+    'Language' => 'EN', 
     'Use HTTPS' => false,
     'Color Scheme' => 'blue',
     'Reseller Domain' => 'planetcloudhosting.cf',
@@ -38,6 +38,9 @@ $config = array(
 # Define Root Folder
     define('ROOT', realpath($_SERVER["DOCUMENT_ROOT"]));
 
+# Prevent null redirect
+    $config_is_loaded = true;
+
 # Get current domain
     if($config['Use HTTPS'] == true){
         $config['domain'] = "https://".strtolower(preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']));
@@ -46,11 +49,10 @@ $config = array(
     }
 
 # Load Language
-    if (glob(ROOT."/".strtolower($config['Language']).".lang.logged.php")) {
-        $config_is_loaded = true;
-        require ROOT."/".strtolower($config['Language']).".lang.logged.php";
+    if (glob(ROOT."/flame-and-blade-miniframework/lang/".strtolower($config['Language']).".lang.logged.php")) {
+        require ROOT."/flame-and-blade-miniframework/lang/".strtolower($config['Language']).".lang.logged.php";
     } else {
-        echo '<h2>WARNING : Language file does not exsist.</h2>' . PHP_EOL;
+        die('<h2>WARNING : '.$config['Language'].' Language file does not exsist.</h2>' . PHP_EOL);
     }
 
 # Start Session
@@ -62,7 +64,5 @@ session_start();
     } else {
         echo '<h2>WARNING : Anti-CSRF Class does not exsist.</h2>' . PHP_EOL;
     }
-
-
 
 ?>
