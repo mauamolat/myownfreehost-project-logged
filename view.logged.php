@@ -63,9 +63,9 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">lock</i>
 	                            </span>
 	                            <div id="input_password_confirm" class="form-line">
-	                                <input id="password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onblur="" required>
+	                                <input id="password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onchange="checkPwdMatch();" required>
 	                            </div>
-	                            <small class="col-pink" style="display: none;" id="password_confirm_notMatched">{WARNING}</small>
+	                            <small class="col-pink" style="display: none;" id="password_confirm_warn">{WARNING}</small>
 	                        </div>'.PHP_EOL;
 
 	                        if($config['Enable Site Category Option'] == true){
