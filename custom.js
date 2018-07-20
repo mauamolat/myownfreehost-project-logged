@@ -4,7 +4,6 @@ function ismaxlength(obj) {
         obj.value = obj.value.substring(0, mlength)
 }
 
-if(thisIsPage == 'SIGNUP'){
 	function checkPwdLength(validate=true){
 
 	    var password = document.getElementById("password").value;
@@ -135,4 +134,19 @@ if(thisIsPage == 'SIGNUP'){
 		}
 
 	}
+
+
+function validateForm(){
+
+	/* Assign Variable's */
+	var password = document.getElementById("input_password").value;
+	var password_confirm = document.getElementById("input_password_confirm").value;
+	var domain = document.getElementById("input_domain").value;
+	var email = document.getElementById("input_email").value;
+	var captcha = document.getElementById("input_captcha").value;
+	var agreedToTerms = document.getElementById("input_terms").checked;
+
+	/* Check Domain Availability */
+	
+
 }

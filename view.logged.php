@@ -30,42 +30,42 @@ if($showPage == 'signup'){
 	            <div class="card">
 	                <div class="body">
 	                    <div class="msg">'.$language["Sign up for a free account"].'</div>
-	                    <form method="post" action="/signup">
+	                    <form method="post" action="/signup" id="signup_form">
 	                        <div class="input-group">
 	                            <span class="input-group-addon">
 	                            <i class="material-icons">person</i>
 	                            </span>
-	                            <div id="input_username" class="form-line">
-	                                <input id="username" type="text" class="form-control" name="username" placeholder="'.$language['your-name'].'.'.$config["Reseller Domain"].'" maxlength="16" onkeyup="return ismaxlength(this)" onblur="checkDomainLength();" required value="">
+	                            <div id="div_username" class="form-line">
+	                                <input id="input_username" type="text" class="form-control" name="username" placeholder="'.$language['your-name'].'.'.$config["Reseller Domain"].'" maxlength="16" onkeyup="return ismaxlength(this)" required value="">
 	                            </div>
-	                            <small class="col-pink" style="display: none;" id="username_warn">{WARNING}</small>
+	                            <small class="col-pink" style="display: none;" id="warn_username">{WARNING}</small>
 	                        </div>
 	                        <div class="input-group">
 	                            <span class="input-group-addon">
 	                            <i class="material-icons">email</i>
 	                            </span>
-	                            <div id="input_email" class="form-line">
-	                                <input id="email" type="email" class="form-control" name="email" placeholder="'.$language["Email Address"].'" onblur="checkEmailValidity();" required value="">
+	                            <div id="div_email" class="form-line">
+	                                <input id="input_email" type="email" class="form-control" name="email" placeholder="'.$language["Email Address"].'" required value="">
 	                            </div>
-	                            <small class="col-pink" style="display: none;" id="email_warn">{WARNING}</small>
+	                            <small class="col-pink" style="display: none;" id="warn_email">{WARNING}</small>
 	                        </div>
 	                        <div class="input-group">
 	                            <span class="input-group-addon">
 	                            <i class="material-icons">lock</i>
 	                            </span>
-	                            <div id="input_password" class="form-line">
-	                                <input id="password" type="password" class="form-control" name="password" minlength="6" placeholder="'.$language["Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onblur="checkPwdLength();" required>
+	                            <div id="div_password" class="form-line">
+	                                <input id="input_password" type="password" class="form-control" name="password" minlength="6" placeholder="'.$language["Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" required>
 	                            </div>
-	                            <small class="col-pink" style="display: none;" id="password_warn">{WARNING}</small>
+	                            <small class="col-pink" style="display: none;" id="warn_password">{WARNING}</small>
 	                        </div>
 	                        <div class="input-group">
 	                            <span class="input-group-addon">
 	                            <i class="material-icons">lock</i>
 	                            </span>
-	                            <div id="input_password_confirm" class="form-line">
-	                                <input id="password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" onchange="checkPwdMatch();" required>
+	                            <div id="div_password_confirm" class="form-line">
+	                                <input id="input_password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" required>
 	                            </div>
-	                            <small class="col-pink" style="display: none;" id="password_confirm_warn">{WARNING}</small>
+	                            <small class="col-pink" style="display: none;" id="warn_password_confirm">{WARNING}</small>
 	                        </div>'.PHP_EOL;
 
 	                        if($config['Enable Site Category Option'] == true){
@@ -108,15 +108,16 @@ if($showPage == 'signup'){
 	                            <span class="input-group-addon">
 	                            <i class="material-icons">lock</i>
 	                            </span>
-	                            <div id="input_captcha" class="form-line">
-	                                <input id="captcha" type="text" class="form-control" name="captcha" placeholder="'.$language["Enter Captcha"].'" onblur="validateForm();" required>
+	                            <div id="div_captcha" class="form-line">
+	                                <input id="input_captcha" type="text" class="form-control" name="captcha" placeholder="'.$language["Enter Captcha"].'" required>
 	                            </div>
+	                            <small class="col-pink" style="display: none;" id="warn_captcha">{WARNING}</small>
 	                        </div>
 	                        <div class="form-group">
-	                            <input type="checkbox" name="terms_of_service" id="terms" class="filled-in chk-col-'.$config['Color Scheme'].' onclick="validateForm();" onchange="validateForm();">
+	                            <input type="checkbox" name="terms_of_service" id="terms" class="filled-in chk-col-'.$config['Color Scheme'].'">
 	                            <label for="terms">'.$language["I've read and agree to the"].' <a href="'.$config['domain'].'/terms">'.$language["terms of service"].'</a>.</label>
 	                        </div>
-	                        <button id="signupBtn" class="btn btn-block btn-lg bg-'.$config['Color Scheme'].' waves-effect" onclick="validateForm();" disabled>'.$language["SIGN UP"].'</button>
+	                        <a id="signupBtn" class="btn btn-block btn-lg bg-'.$config['Color Scheme'].' waves-effect" onclick="validateForm();">'.$language["SIGN UP"].'</a>
 	                        <div class="m-t-25 m-b--5 align-center">
 	                            <a href="'.$config["domain"].'/login">'.$language["Already have a membership"].'?</a>
 	                        </div>
