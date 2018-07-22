@@ -4,149 +4,168 @@ function ismaxlength(obj) {
         obj.value = obj.value.substring(0, mlength)
 }
 
-	function checkPwdLength(validate=true){
+function checkDomain(){
 
-	    var password = document.getElementById("password").value;
+	var domain = document.getElementById("input_username").value;
+	var keep_domain = document.getElementById("keep_domain").innerHTML;
+	var reCallReturn = null;
 
-	    if(password.length >= 6 && password.length <= 25){
-	        document.getElementById("password_warn").style.display = "none";
-	        document.getElementById("input_password").className = 'form-line focused';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	        return true;
-	    }else if(password.length > 25){
-	    	document.getElementById("password_warn").innerHTML = "Password is too long! 25 characthers maximum.";
-	    	document.getElementById("password_warn").style.display = "block";
-	        document.getElementById("input_password").className = 'form-line focused error';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	        return false;
-	    }else{
-	    	document.getElementById("password_warn").innerHTML = "Password is too short! 6 characthers minimum.";
-	        document.getElementById("password_warn").style.display = "block";
-	        document.getElementById("input_password").className = 'form-line focused error';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	        return false;
-	    }
-
+	// Check domain length
+    if(domain.length >= 3 && domain.length <= 16){
+	    /* Do nothing */
+	}else if(domain.length > 16){
+		document.getElementById("warn_username").innerHTML = "Choosen subdomain is too long! 16 characthers maximum.";
+		document.getElementById("warn_username").className = 'col-pink';
+		document.getElementById("warn_username").style.display = "block";
+	    document.getElementById("div_username").className = 'form-line focused error';
+	    return false;
+	}else{
+		document.getElementById("warn_username").innerHTML = "Choosen subdomain is too short! 3 characthers minimum.";
+		document.getElementById("warn_username").className = 'col-pink';
+	    document.getElementById("warn_username").style.display = "block";
+	    document.getElementById("div_username").className = 'form-line focused error';
+	    return false;
 	}
 
-	function checkDomainLength(validate=true){
+	// Append reseller domain
+	domain = domain+".planetcloudhosting.cf";
 
-		var domain = document.getElementById("username").value;
+	// Check domain validity
+    if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)){
+        /* Do nothing */
+    }else {
+    	document.getElementById("warn_username").innerHTML = "Please enter a valid domain name";
+	    document.getElementById("warn_username").className = 'col-pink';
+	    document.getElementById("warn_username").style.display = "block";
+	    document.getElementById("div_username").className = 'form-line focused error';
+        return false;
+    }
 
-		if(domain.length >= 3 && domain.length <= 16){
-	        document.getElementById("username_warn").style.display = "none";
-	        document.getElementById("input_username").className = 'form-line focused';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	        return true;
-	    }else if(domain.length > 16){
-	    	document.getElementById("username_warn").innerHTML = "Choosen subdomain is too long! 25 characthers maximum.";
-	    	document.getElementById("username_warn").style.display = "block";
-	        document.getElementById("input_username").className = 'form-line focused error';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	        return false;
-	    }else{
-	    	document.getElementById("username_warn").innerHTML = "Choosen subdomain is too short! 3 characthers minimum.";
-	        document.getElementById("username_warn").style.display = "block";
-	        document.getElementById("input_username").className = 'form-line focused error';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	        return false;
-	    }
+    if(domain != keep_domain){
 
+    	// Call API
+		var xhr = new XMLHttpRequest();
+	        xhr.open('GET', 'https://mofh.tariktunaikartukredit.cf/api-v2/public/availability.public.php?domain='+domain+'&response_type=bool');
+	        xhr.send();
+
+	    xhr.onload = function() {
+
+	    	if(xhr.status !== 200){
+	    		// Server error, do not report to user but log to console
+	        	console.log(xhr.responseText);
+	        	document.getElementById("warn_username").style.display = "none";
+		        document.getElementById("div_username").className = 'form-line focused';
+	    		return false;
+	    	}
+
+	        if(xhr.responseText == '1'){
+	        	document.getElementById("warn_username").innerHTML = "Contragulations! "+domain+" is available!";
+	        	document.getElementById("warn_username").className = 'col-green';
+		        document.getElementById("warn_username").style.display = "block";
+		        document.getElementById("div_username").className = 'form-line focused success';
+		        document.getElementById("keep_domain").innerHTML = domain;
+	        }else if(xhr.responseText == '0'){
+	        	document.getElementById("warn_username").innerHTML = "Unfortunely "+domain+" has been hosted here.";
+		        document.getElementById("warn_username").className = 'col-pink';
+		        document.getElementById("warn_username").style.display = "block";
+		        document.getElementById("div_username").className = 'form-line focused error';
+		        document.getElementById("keep_domain").innerHTML = domain;
+	        }else{
+	        	// Server error, do not report to user but log to console
+	        	console.log(xhr.responseText);
+	        	document.getElementById("warn_username").style.display = "none";
+		        document.getElementById("div_username").className = 'form-line focused';
+		        return false;
+	        }
+
+	    };
+
+    }
+
+    return true;
+
+}
+
+function checkEmail(){
+
+	var email = document.getElementById("input_email").value;
+	
+	if(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
+		document.getElementById("warn_email").style.display = "none";
+	    document.getElementById("div_email").className = 'form-line focused success';
+	    return true;
+	}else{
+		document.getElementById("warn_email").innerHTML = "Please enter a valid email.";
+	    document.getElementById("warn_email").style.display = "block";
+	    document.getElementById("div_email").className = 'form-line focused error';
+		return false;
 	}
 
-	function checkEmailValidity(validate=true) {
+}
 
-		var email = document.getElementById("email").value;
+function checkPassword(){
 
-	  	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	  	
-	  	if(re.test(email)){
-	  		document.getElementById("email_warn").style.display = "none";
-	        document.getElementById("input_email").className = 'form-line focused';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	        return true;
-	  	}else{
-	  		document.getElementById("email_warn").innerHTML = "Email is invalid! Please enter a valid email.";
-	        document.getElementById("email_warn").style.display = "block";
-	        document.getElementById("input_email").className = 'form-line focused error';
-	        if(validate == true){
-	        	validateForm();
-	        }
-	  		return false;
-	  	}
+	var password = document.getElementById("input_password").value;
 
+	if(password.length >= 6 && password.length <= 25){
+	    document.getElementById("warn_password").style.display = "none";
+	    document.getElementById("div_password").className = 'form-line focused success';
+	    return true;
+	}else if(password.length > 25){
+		document.getElementById("warn_password").innerHTML = "Password is too long! 25 characthers maximum.";
+		document.getElementById("warn_password").style.display = "block";
+	    document.getElementById("div_password").className = 'form-line focused error';
+	    return false;
+	}else{
+		document.getElementById("warn_password").innerHTML = "Password is too short! 6 characthers minimum.";
+	    document.getElementById("warn_password").style.display = "block";
+	    document.getElementById("div_password").className = 'form-line focused error';
+	    return false;
 	}
 
-	function checkPwdMatch(validate=true){
+}
 
-		var pwd1 = document.getElementById("password").value;
-		var pwd2 = document.getElementById("password_confirm").value;
+function checkPasswordMatch(){
 
-		if(pwd1 == pwd2){
-			document.getElementById("password_confirm_warn").style.display = "none";
-			document.getElementById("input_password_confirm").className = 'form-line focused';
-			if(validate == true){
-	        	validateForm();
-	        }
-			return true;
-		}else{
-			document.getElementById("password_confirm_warn").innerHTML = "Password does not match";
-			document.getElementById("password_confirm_warn").style.display = "block";
-			document.getElementById("input_password_confirm").className = 'form-line focused error';
-			if(validate == true){
-	        	validateForm();
-	        }
-			return false;
-		}
+	var pwd1 = document.getElementById("input_password").value;
+	var pwd2 = document.getElementById("input_password_confirm").value;
 
+	if(pwd1 == pwd2){
+		document.getElementById("warn_password_confirm").style.display = "none";
+		document.getElementById("div_password_confirm").className = 'form-line focused success';
+		return true;
+	}else{
+		document.getElementById("warn_password_confirm").innerHTML = "Password does not match.";
+		document.getElementById("warn_password_confirm").style.display = "block";
+		document.getElementById("div_password_confirm").className = 'form-line focused error';
+		return false;
 	}
 
-	function checkDomainAvailability(){
-		// Initialize QUID:Open-API Project
-		// Call -> QUID:API->availability
-		// Response -> Catch
-		// if Response == available : {tell:Available} ? {tell:Taken}
+}
+
+function checkCaptcha(){
+
+	var captcha = document.getElementById('input_captcha').value;
+
+	if(captcha == ''){
+		document.getElementById("warn_captcha").innerHTML = "Captcha cannot be empty.";
+		document.getElementById("warn_captcha").style.display = "block";
+		document.getElementById("div_captcha").className = 'form-line focused error';
+		return false;
+	}else{
+		document.getElementById("warn_captcha").style.display = "none";
+		document.getElementById("div_captcha").className = 'form-line focused success';
+		return true;
 	}
 
-	function validateForm(){
-
-		console.log("Validation called");
-
-		var captcha = document.getElementById("captcha").value;
-		var agreedToTerms = document.getElementById("terms").checked;
-		
-		if(checkDomainLength(false) && checkEmailValidity(false) && checkPwdLength(false) && checkPwdMatch(false) && captcha != '' && agreedToTerms){
-			document.getElementById('signupBtn').removeAttribute('disabled');
-		}
-
-	}
-
+}
 
 function validateForm(){
 
-	/* Assign Variable's */
-	var password = document.getElementById("input_password").value;
-	var password_confirm = document.getElementById("input_password_confirm").value;
-	var domain = document.getElementById("input_domain").value;
-	var email = document.getElementById("input_email").value;
-	var captcha = document.getElementById("input_captcha").value;
-	var agreedToTerms = document.getElementById("input_terms").checked;
-
-	/* Check Domain Availability */
+	var agreedToTerms = document.getElementById('terms').checked;
 	
+	if(checkDomain() && checkEmail() && checkPassword() && checkPasswordMatch() && checkCaptcha() && agreedToTerms){
+		document.getElementById('signup_form').submit();
+	}
 
 }

@@ -36,7 +36,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">person</i>
 	                            </span>
 	                            <div id="div_username" class="form-line">
-	                                <input id="input_username" type="text" class="form-control" name="username" placeholder="'.$language['your-name'].'.'.$config["Reseller Domain"].'" maxlength="16" onkeyup="return ismaxlength(this)" required value="">
+	                                <input id="input_username" type="text" class="form-control" name="username" placeholder="'.$language['your-name'].'.'.$config["Reseller Domain"].'" maxlength="16" onkeyup="checkDomain();return ismaxlength(this);" onblur="checkDomain();" autocomplete="off" required value="">
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="warn_username">{WARNING}</small>
 	                        </div>
@@ -45,7 +45,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">email</i>
 	                            </span>
 	                            <div id="div_email" class="form-line">
-	                                <input id="input_email" type="email" class="form-control" name="email" placeholder="'.$language["Email Address"].'" required value="">
+	                                <input id="input_email" type="email" class="form-control" name="email" placeholder="'.$language["Email Address"].'" onkeyup="checkEmail();" autocomplete="off" required value="">
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="warn_email">{WARNING}</small>
 	                        </div>
@@ -54,7 +54,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">lock</i>
 	                            </span>
 	                            <div id="div_password" class="form-line">
-	                                <input id="input_password" type="password" class="form-control" name="password" minlength="6" placeholder="'.$language["Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" required>
+	                                <input id="input_password" type="password" class="form-control" name="password" minlength="6" placeholder="'.$language["Password"].'" maxlength="25" onkeyup="checkPassword();return ismaxlength(this)" required>
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="warn_password">{WARNING}</small>
 	                        </div>
@@ -63,7 +63,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">lock</i>
 	                            </span>
 	                            <div id="div_password_confirm" class="form-line">
-	                                <input id="input_password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="return ismaxlength(this)" required>
+	                                <input id="input_password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="checkPasswordMatch();return ismaxlength(this)" required>
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="warn_password_confirm">{WARNING}</small>
 	                        </div>'.PHP_EOL;
@@ -109,7 +109,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">lock</i>
 	                            </span>
 	                            <div id="div_captcha" class="form-line">
-	                                <input id="input_captcha" type="text" class="form-control" name="captcha" placeholder="'.$language["Enter Captcha"].'" required>
+	                                <input id="input_captcha" type="text" class="form-control" name="captcha" placeholder="'.$language["Enter Captcha"].'" onblur="checkCaptcha();" autocomplete="off" required>
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="warn_captcha">{WARNING}</small>
 	                        </div>
@@ -131,6 +131,7 @@ if($showPage == 'signup'){
 }
 
 echo '</div>
+			<div id="keep_domain" style="display:none;"></div>
 	        <script src="/material.logged.js"></script>
 	        <script src="/custom.js"></script>
 	    </body>
