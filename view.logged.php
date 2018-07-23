@@ -13,8 +13,12 @@ echo '<!DOCTYPE html>
 	        <link rel="icon" href="/favicon.ico" type="image/x-icon">
 	        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
 	        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-	        <link href="/material.logged.css" rel="stylesheet">
-	    </head>
+	        <link href="/material.logged.css" rel="stylesheet">'.PHP_EOL;
+	        if($config['Enable Animations'] == true){
+	        	echo '	        <link href="https://daneden.github.io/animate.css/animate.min.css" rel="stylesheet">'.PHP_EOL;
+	        }
+
+	    echo '	        </head>
 	    <body class="login-page">
 	        <div class="login-box">
 	            <div class="logo">
@@ -31,6 +35,7 @@ if($showPage == 'signup'){
 	                <div class="body">
 	                    <div class="msg">'.$language["Sign up for a free account"].'</div>
 	                    <form method="post" action="/signup" id="signup_form">
+	                    '.showMessage().'
 	                        <div class="input-group">
 	                            <span class="input-group-addon">
 	                            <i class="material-icons">person</i>
@@ -130,8 +135,11 @@ if($showPage == 'signup'){
 	            </script>'.PHP_EOL;
 }
 
-echo '</div>
+echo '			</div>
 			<div id="keep_domain" style="display:none;"></div>
+			<script type="text/javascript">
+				var resellerDomain = "'.$config['Reseller Domain'].'";
+			</script>
 	        <script src="/material.logged.js"></script>
 	        <script src="/custom.js"></script>
 	    </body>

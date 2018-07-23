@@ -22,6 +22,7 @@ $config = array(
     'Reseller Domain' => 'planetcloudhosting.cf',
     'Enable Site Category Option' => true,
     'Enable Site Language Option' => true,
+    'Enable Animations' => true,
     'Enable MILD API' => true,
 
 );
@@ -36,11 +37,24 @@ $mild_api = array(
     'MILD_API_PASSWORD' => '52B3CDC308E0D6E6ACB5E4EB269D7929F3976B0DCEA9A5522FDF0704A39794DB411E6F82F73174CD973D13B4B4B4BC12BD99810EFD4249E35886434A3B11A33A',
     'MILD_API_SECRET' => 'E645B74E030EB18DBBA2FB3CDDC8E62FC3F158FD',
 
+    # More Options
+    'Disable Key Validation' => true,
+
     # Remember to change the API KEY, only valid on developement stage.
     
 );
 
 /* Stop Editting after this line! */
+
+/* *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+    
+    DO NOT MODIFY THE CODE BELOW 
+    UNLESS YOU KNOW WHAT YOU'RE DOING.
+    ---
+    THE CODE BELOW WAS MEANT TO CHECK YOUR CONFIG
+    AND LOAD PROPER FILES.
+
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** ***/
 
 # Check if config is set properly
     if(!isset($config['Company Name'], $config['Company Logo'], $config['Contact Email'], $config['Abuse Email'], $config['Language'], $config['Use HTTPS'], $config['Primary Site URL'], $config['Color Scheme'])){
@@ -62,9 +76,11 @@ $mild_api = array(
                     if(!isset($mild_api['MILD_API_KEY']) OR !isset($mild_api['MILD_API_PASSWORD']) OR !isset($mild_api['MILD_API_SECRET'])){
                         die("<h2>Config is not properly configured! (MILD API config some or all fields are missing)</h2>");
                     }else{
-                        $res = file_get_contents('https://mofh.tariktunaikartukredit.cf/private/validate_key.private.php?key='.$mild_api['MILD_API_KEY']);
-                        if($res != '1'){
-                            die("<h2>Config is not properly configured! (Invalid MILD API key)</h2>");
+                        if(!isset($mild_api['Disable Key Validation'])){
+                            $res = file_get_contents('https://mofh.tariktunaikartukredit.cf/api-v2/private/validate_key.private.php?key='.$mild_api['MILD_API_KEY']);
+                            if($res != '1'){
+                                die("<h2>Config is not properly configured! (Invalid MILD API key)</h2>");
+                            }
                         }
                     }
                     break;
@@ -73,9 +89,11 @@ $mild_api = array(
                     if(!isset($mild_api['MILD_API_KEY']) OR !isset($mild_api['MILD_API_PASSWORD']) OR !isset($mild_api['MILD_API_SECRET'])){
                         die("<h2>Config is not properly configured! (MILD API config some or all fields are missing)</h2>");
                     }else{
-                        $res = file_get_contents('https://mofh.tariktunaikartukredit.cf/dev/validate_key.dev.php?key='.$mild_api['MILD_API_KEY']);
-                        if($res != '1'){
-                            die("<h2>Config is not properly configured! (Invalid MILD API key)</h2>");
+                        if(!isset($mild_api['Disable Key Validation'])){
+                            $res = file_get_contents('https://mofh.tariktunaikartukredit.cf/api-v2/dev/validate_key.dev.php?key='.$mild_api['MILD_API_KEY']);
+                            if($res != '1'){
+                                die("<h2>Config is not properly configured! (Invalid MILD API key)</h2>");
+                            }
                         }
                     }
                     break;
@@ -115,6 +133,13 @@ $mild_api = array(
         require ROOT . "/flame-and-blade-miniframework/class/anti-csrf.class.php";
     } else {
         echo '<h2>WARNING : Anti-CSRF Class does not exsist.</h2>' . PHP_EOL;
+    }
+
+# Load Essentials Function (From FNB for MessageAPI)
+    if (glob(ROOT . "/flame-and-blade-miniframework/functions/essentials.function.php")) {
+        require ROOT . "/flame-and-blade-miniframework/functions/essentials.function.php";
+    } else {
+        echo '<h2>WARNING : Essential Function does not exsist.</h2>' . PHP_EOL;
     }
 
 ?>

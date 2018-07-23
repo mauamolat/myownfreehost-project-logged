@@ -28,7 +28,7 @@ function checkDomain(){
 	}
 
 	// Append reseller domain
-	domain = domain+".planetcloudhosting.cf";
+	domain = domain+'.'+String(resellerDomain);
 
 	// Check domain validity
     if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)){
