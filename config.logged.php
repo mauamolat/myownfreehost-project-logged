@@ -21,21 +21,22 @@ $config = array(
     'Reseller Domain' => 'planetcloudhosting.cf',
     'Enable Site Category Option' => true,
     'Enable Site Language Option' => true,
-
-);
-
-$config_pro = array(
-
-    'Enable MILD API' => true, 
+    'Enable MILD API' => true,
 
 );
 
 $mild_api = array(
 
+    # Define API type
+    'Type' => 'PUBLIC',
+
+    # API credentials for Private API
+    /*
     'iKey' => 'String',
     'API Username' => 'String',
     'API Password' => 'String', 
-
+    */
+    
 );
 
 /* Stop Editting after this line! */
