@@ -30,11 +30,18 @@ echo '<!DOCTYPE html>
 	            </div>'.PHP_EOL;
 
 if($showPage == 'signup'){
+
+	if($config['Enable MILD API']){
+		$form_action = '/signup';
+	}else{
+		$form_action = 'https://securesignup.net/register2.php';
+	}
+
 	echo '	
 	            <div class="card">
 	                <div class="body">
 	                    <div class="msg">'.$language["Sign up for a free account"].'</div>
-	                    <form method="post" action="/signup" id="signup_form">
+	                    <form method="post" action="'.$form_action.'" id="signup_form">
 	                    '.showMessage().'
 	                        <div class="input-group">
 	                            <span class="input-group-addon">
@@ -59,7 +66,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">lock</i>
 	                            </span>
 	                            <div id="div_password" class="form-line">
-	                                <input id="input_password" type="password" class="form-control" name="password" minlength="6" placeholder="'.$language["Password"].'" maxlength="25" onkeyup="checkPassword();return ismaxlength(this)" required>
+	                                <input id="input_password" type="password" class="form-control" name="password" minlength="'.$config['Minimum Password Length'].'" placeholder="'.$language["Password"].'" maxlength="26" onkeyup="checkPassword();return ismaxlength(this)" required>
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="warn_password">{WARNING}</small>
 	                        </div>
@@ -68,7 +75,7 @@ if($showPage == 'signup'){
 	                            <i class="material-icons">lock</i>
 	                            </span>
 	                            <div id="div_password_confirm" class="form-line">
-	                                <input id="input_password_confirm" type="password" class="form-control" name="password_confirm" minlength="6" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="checkPasswordMatch();return ismaxlength(this)" required>
+	                                <input id="input_password_confirm" type="password" class="form-control" name="password_confirm" minlength="'.$config['Minimum Password Length'].'" placeholder="'.$language["Confirm Password"].'" maxlength="25" onkeyup="checkPasswordMatch();return ismaxlength(this)" required>
 	                            </div>
 	                            <small class="col-pink" style="display: none;" id="warn_password_confirm">{WARNING}</small>
 	                        </div>'.PHP_EOL;
@@ -119,7 +126,7 @@ if($showPage == 'signup'){
 	                            <small class="col-pink" style="display: none;" id="warn_captcha">{WARNING}</small>
 	                        </div>
 	                        <div class="form-group">
-	                            <input type="checkbox" name="terms_of_service" id="terms" class="filled-in chk-col-'.$config['Color Scheme'].'">
+	                            <input type="checkbox" name="terms_of_service" value="agreed" id="terms" class="filled-in chk-col-'.$config['Color Scheme'].'">
 	                            <label for="terms">'.$language["I've read and agree to the"].' <a href="'.$config['domain'].'/terms">'.$language["terms of service"].'</a>.</label>
 	                        </div>
 	                        <a id="signupBtn" class="btn btn-block btn-lg bg-'.$config['Color Scheme'].' waves-effect" onclick="validateForm();">'.$language["SIGN UP"].'</a>
@@ -138,8 +145,14 @@ if($showPage == 'signup'){
 echo '			</div>
 			<div id="keep_domain" style="display:none;"></div>
 			<script type="text/javascript">
-				var resellerDomain = "'.$config['Reseller Domain'].'";
-			</script>
+				var minPwdLength = "'.$config['Minimum Password Length'].'";'.PHP_EOL;
+
+				if($config['Enable MILD API']){
+					echo '				var apiServer = "'.$mild_api['Server'].'";
+				var resellerDomain = "'.$config['Reseller Domain'].'";'.PHP_EOL;
+				}
+
+			echo '			</script>
 	        <script src="/material.logged.js"></script>
 	        <script src="/custom.js"></script>
 	    </body>

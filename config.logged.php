@@ -19,15 +19,23 @@ $config = array(
     'Language' => 'EN', 
     'Use HTTPS' => false,
     'Color Scheme' => 'blue',
+    'Enable Animations' => true,
     'Reseller Domain' => 'planetcloudhosting.cf',
+
+    # Form Configuration
     'Enable Site Category Option' => true,
     'Enable Site Language Option' => true,
-    'Enable Animations' => true,
+    'Minimum Password Length' => 8,
+    
+    # API Configuration
     'Enable MILD API' => true,
 
 );
 
 $mild_api = array(
+
+    # Define API Server
+    'Server' => 'https://mofh.tariktunaikartukredit.cf/api-v2',
 
     # Define API type
     'Type' => 'DEVELOPEMENT',
@@ -39,6 +47,7 @@ $mild_api = array(
 
     # More Options
     'Disable Key Validation' => true,
+    'Check if Server is Down' => true,
 
     # Remember to change the API KEY, only valid on developement stage.
     
@@ -65,19 +74,27 @@ $mild_api = array(
         die("<h2>Config is not properly configured! (Some or all fields are empty)</h2>");
     }
 
-    if($config['Enable MILD API'] == true){
+    if($config['Enable MILD API']){
         if(!isset($mild_api)){
             die("<h2>Config is not properly configured! (MILD API config is not present)</h2>");
-        }elseif(!isset($mild_api['Type'])){
+        }elseif(!isset($mild_api['Type']) OR !isset($mild_api['Server'])){
             die("<h2>Config is not properly configured! (MILD API config some or all fields are missing)</h2>");
         }else{
+
+            if($mild_api['Check if Server is Down']){
+                $res = file_get_contents($mild_api['Server'].'/is_down.php');
+                if($res != '1'){
+                    die("MILD API server is down.<br/>Please choose another server or disable MILD API.<br/>Server list can be founded on https://github.com/PlanetGamingGG/myownfreehost-mild-api/blob/master/SERVER_LIST.md");
+                }
+            }
+
             switch ($mild_api['Type']) {
                 case 'PRIVATE':
                     if(!isset($mild_api['MILD_API_KEY']) OR !isset($mild_api['MILD_API_PASSWORD']) OR !isset($mild_api['MILD_API_SECRET'])){
                         die("<h2>Config is not properly configured! (MILD API config some or all fields are missing)</h2>");
                     }else{
                         if(!isset($mild_api['Disable Key Validation'])){
-                            $res = file_get_contents('https://mofh.tariktunaikartukredit.cf/api-v2/private/validate_key.private.php?key='.$mild_api['MILD_API_KEY']);
+                            $res = file_get_contents($mild_api['Server'].'/private/validate_key.private.php?key='.$mild_api['MILD_API_KEY']);
                             if($res != '1'){
                                 die("<h2>Config is not properly configured! (Invalid MILD API key)</h2>");
                             }
@@ -90,7 +107,7 @@ $mild_api = array(
                         die("<h2>Config is not properly configured! (MILD API config some or all fields are missing)</h2>");
                     }else{
                         if(!isset($mild_api['Disable Key Validation'])){
-                            $res = file_get_contents('https://mofh.tariktunaikartukredit.cf/api-v2/dev/validate_key.dev.php?key='.$mild_api['MILD_API_KEY']);
+                            $res = file_get_contents($mild_api['Server'].'/dev/validate_key.dev.php?key='.$mild_api['MILD_API_KEY']);
                             if($res != '1'){
                                 die("<h2>Config is not properly configured! (Invalid MILD API key)</h2>");
                             }

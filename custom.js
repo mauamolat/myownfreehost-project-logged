@@ -11,8 +11,9 @@ function checkDomain(){
 	var reCallReturn = null;
 
 	// Check domain length
-    if(domain.length >= 3 && domain.length <= 16){
-	    /* Do nothing */
+    if(domain.length >= 4 && domain.length <= 16){
+		document.getElementById("warn_username").style.display = "none";
+	    document.getElementById("div_username").className = 'form-line focused success';
 	}else if(domain.length > 16){
 		document.getElementById("warn_username").innerHTML = "Choosen subdomain is too long! 16 characthers maximum.";
 		document.getElementById("warn_username").className = 'col-pink';
@@ -32,7 +33,8 @@ function checkDomain(){
 
 	// Check domain validity
     if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)){
-        /* Do nothing */
+        document.getElementById("warn_username").style.display = "none";
+	    document.getElementById("div_username").className = 'form-line focused success';
     }else {
     	document.getElementById("warn_username").innerHTML = "Please enter a valid domain name";
 	    document.getElementById("warn_username").className = 'col-pink';
@@ -41,11 +43,14 @@ function checkDomain(){
         return false;
     }
 
+    // Check if MILD API is enabled
+    if(typeof apiServer !== 'undefined' && apiServer !== null){/* Do Nothing */}else{return true;}
+
     if(domain != keep_domain){
 
     	// Call API
 		var xhr = new XMLHttpRequest();
-	        xhr.open('GET', 'https://mofh.tariktunaikartukredit.cf/api-v2/public/availability.public.php?domain='+domain+'&response_type=bool');
+	        xhr.open('GET', apiServer+'/public/availability.public.php?domain='+domain+'&response_type=bool');
 	        xhr.send();
 
 	    xhr.onload = function() {
@@ -70,6 +75,7 @@ function checkDomain(){
 		        document.getElementById("warn_username").style.display = "block";
 		        document.getElementById("div_username").className = 'form-line focused error';
 		        document.getElementById("keep_domain").innerHTML = domain;
+		        return false;
 	        }else{
 	        	// Server error, do not report to user but log to console
 	        	console.log(xhr.responseText);
@@ -107,7 +113,7 @@ function checkPassword(){
 
 	var password = document.getElementById("input_password").value;
 
-	if(password.length >= 6 && password.length <= 25){
+	if(password.length >= minPwdLength && password.length <= 25){
 	    document.getElementById("warn_password").style.display = "none";
 	    document.getElementById("div_password").className = 'form-line focused success';
 	    return true;
@@ -117,7 +123,7 @@ function checkPassword(){
 	    document.getElementById("div_password").className = 'form-line focused error';
 	    return false;
 	}else{
-		document.getElementById("warn_password").innerHTML = "Password is too short! 6 characthers minimum.";
+		document.getElementById("warn_password").innerHTML = "Password is too short! "+minPwdLength+" characthers minimum.";
 	    document.getElementById("warn_password").style.display = "block";
 	    document.getElementById("div_password").className = 'form-line focused error';
 	    return false;
