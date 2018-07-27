@@ -12,16 +12,18 @@ function checkDomain(){
 
 	// Check domain length
     if(domain.length >= 4 && domain.length <= 16){
-		document.getElementById("warn_username").style.display = "none";
-	    document.getElementById("div_username").className = 'form-line focused success';
+    	if(typeof apiServer !== 'undefined' && apiServer !== null){/* Do Nothing */}else{
+	    	document.getElementById("warn_username").style.display = "none";
+		    document.getElementById("div_username").className = 'form-line focused success';
+	    }		
 	}else if(domain.length > 16){
-		document.getElementById("warn_username").innerHTML = "Choosen subdomain is too long! 16 characthers maximum.";
+		document.getElementById("warn_username").innerHTML = lang.subTooLong;
 		document.getElementById("warn_username").className = 'col-pink';
 		document.getElementById("warn_username").style.display = "block";
 	    document.getElementById("div_username").className = 'form-line focused error';
 	    return false;
 	}else{
-		document.getElementById("warn_username").innerHTML = "Choosen subdomain is too short! 3 characthers minimum.";
+		document.getElementById("warn_username").innerHTML = lang.subTooShort;
 		document.getElementById("warn_username").className = 'col-pink';
 	    document.getElementById("warn_username").style.display = "block";
 	    document.getElementById("div_username").className = 'form-line focused error';
@@ -33,10 +35,12 @@ function checkDomain(){
 
 	// Check domain validity
     if(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)){
-        document.getElementById("warn_username").style.display = "none";
-	    document.getElementById("div_username").className = 'form-line focused success';
+    	if(typeof apiServer !== 'undefined' && apiServer !== null){/* Do Nothing */}else{
+    		document.getElementById("warn_username").style.display = "none";
+	    	document.getElementById("div_username").className = 'form-line focused success';
+    	}  
     }else {
-    	document.getElementById("warn_username").innerHTML = "Please enter a valid domain name";
+    	document.getElementById("warn_username").innerHTML = lang.invalidDomainName;
 	    document.getElementById("warn_username").className = 'col-pink';
 	    document.getElementById("warn_username").style.display = "block";
 	    document.getElementById("div_username").className = 'form-line focused error';
@@ -64,13 +68,13 @@ function checkDomain(){
 	    	}
 
 	        if(xhr.responseText == '1'){
-	        	document.getElementById("warn_username").innerHTML = "Contragulations! "+domain+" is available!";
+	        	document.getElementById("warn_username").innerHTML = lang.contrags+" "+domain+" "+lang.isAvailable;
 	        	document.getElementById("warn_username").className = 'col-green';
 		        document.getElementById("warn_username").style.display = "block";
 		        document.getElementById("div_username").className = 'form-line focused success';
 		        document.getElementById("keep_domain").innerHTML = domain;
 	        }else if(xhr.responseText == '0'){
-	        	document.getElementById("warn_username").innerHTML = "Unfortunely "+domain+" has been hosted here.";
+	        	document.getElementById("warn_username").innerHTML = lang.unfortune+" "+domain+" "+lang.isTaken;
 		        document.getElementById("warn_username").className = 'col-pink';
 		        document.getElementById("warn_username").style.display = "block";
 		        document.getElementById("div_username").className = 'form-line focused error';
@@ -101,7 +105,7 @@ function checkEmail(){
 	    document.getElementById("div_email").className = 'form-line focused success';
 	    return true;
 	}else{
-		document.getElementById("warn_email").innerHTML = "Please enter a valid email.";
+		document.getElementById("warn_email").innerHTML = lang.invalidEmail;
 	    document.getElementById("warn_email").style.display = "block";
 	    document.getElementById("div_email").className = 'form-line focused error';
 		return false;
@@ -118,12 +122,12 @@ function checkPassword(){
 	    document.getElementById("div_password").className = 'form-line focused success';
 	    return true;
 	}else if(password.length > 25){
-		document.getElementById("warn_password").innerHTML = "Password is too long! 25 characthers maximum.";
+		document.getElementById("warn_password").innerHTML = lang.pwdTooLong;
 		document.getElementById("warn_password").style.display = "block";
 	    document.getElementById("div_password").className = 'form-line focused error';
 	    return false;
 	}else{
-		document.getElementById("warn_password").innerHTML = "Password is too short! "+minPwdLength+" characthers minimum.";
+		document.getElementById("warn_password").innerHTML = lang.pwdTooShort1+" "+minPwdLength+" "+lang.pwdTooShort2;
 	    document.getElementById("warn_password").style.display = "block";
 	    document.getElementById("div_password").className = 'form-line focused error';
 	    return false;
@@ -141,7 +145,7 @@ function checkPasswordMatch(){
 		document.getElementById("div_password_confirm").className = 'form-line focused success';
 		return true;
 	}else{
-		document.getElementById("warn_password_confirm").innerHTML = "Password does not match.";
+		document.getElementById("warn_password_confirm").innerHTML = lang.pwdNotMatch;
 		document.getElementById("warn_password_confirm").style.display = "block";
 		document.getElementById("div_password_confirm").className = 'form-line focused error';
 		return false;
@@ -154,7 +158,7 @@ function checkCaptcha(){
 	var captcha = document.getElementById('input_captcha').value;
 
 	if(captcha == ''){
-		document.getElementById("warn_captcha").innerHTML = "Captcha cannot be empty.";
+		document.getElementById("warn_captcha").innerHTML = lang.captchaEmpty;
 		document.getElementById("warn_captcha").style.display = "block";
 		document.getElementById("div_captcha").className = 'form-line focused error';
 		return false;
@@ -166,11 +170,24 @@ function checkCaptcha(){
 
 }
 
-function validateForm(){
+function checkTerms(){
 
 	var agreedToTerms = document.getElementById('terms').checked;
-	
-	if(checkDomain() && checkEmail() && checkPassword() && checkPasswordMatch() && checkCaptcha() && agreedToTerms){
+
+	if(agreedToTerms){
+		document.getElementById("warn_terms").style.display = "none";
+		return true;
+	}else{
+		document.getElementById("warn_terms").innerHTML = lang.termsNotChecked;
+		document.getElementById("warn_terms").style.display = "block";
+		return false;
+	}
+
+}
+
+function validateForm(){
+
+	if(checkDomain() && checkEmail() && checkPassword() && checkPasswordMatch() && checkCaptcha() && checkTerms()){
 		document.getElementById('signup_form').submit();
 	}
 

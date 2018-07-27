@@ -10,6 +10,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	if(!$config['Enable MILD API']){
 		$_SESSION['showMsg'][] = '[TYPE:DANGER]Something\'s not right...<br/>Try again?';
 	}
+
+	# Check if MILD API was either set to DEVELOPEMENT or PRIVATE mode
+	if(!$mild_api['Type'] == 'PRIVATE' OR !$mild_api['Type'] == 'DEVELOPEMENT'){
+		$_SESSION['showMsg'][] = '[TYPE:DANGER]Something went wrong with the server configuration...<br/>Don\'t worry! It\'s not your fault.<br/>Please try again.';
+	}
     
 	/* Validate token */
     if(isset($_POST['csrf_token'])){
@@ -134,7 +139,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     	if(validateCredentials()){
     		
-    		
+    		switch ($mild_api['Type']) {
+    			case 'PRIVATE':
+    				$call = file_get_contents($mild_api['Server'].'/private/signup.private.php');
+    				break;
+
+    			case 'DEVELOPEMENT':
+    				$call = file_get_contents($mild_api['Server'].'/dev/signup.private.php');
+    				break;
+    			
+    			default:
+    				$_SESSION['showMsg'][] = '[TYPE:DANGER]Something went wrong with the server configuration...<br/>Don\'t worry! It\'s not your fault.<br/>Please try again.';
+    				break;
+    		}
+
+    		echo 'PASSED';
 
     	}
 

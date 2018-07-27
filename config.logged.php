@@ -47,7 +47,7 @@ $mild_api = array(
 
     # More Options
     'Disable Key Validation' => true,
-    'Check if Server is Down' => true,
+    'Check if Server is Down' => false,
 
     # Remember to change the API KEY, only valid on developement stage.
     
@@ -84,9 +84,11 @@ $mild_api = array(
             if($mild_api['Check if Server is Down']){
                 $res = file_get_contents($mild_api['Server'].'/is_down.php');
                 if($res != '1'){
-                    die("MILD API server is down.<br/>Please choose another server or disable MILD API.<br/>Server list can be founded on https://github.com/PlanetGamingGG/myownfreehost-mild-api/blob/master/SERVER_LIST.md");
+                    $config['Enable MILD API'] = false;
                 }
             }
+
+            $mild_api['Type'] = strtoupper($mild_api['Type']);
 
             switch ($mild_api['Type']) {
                 case 'PRIVATE':
