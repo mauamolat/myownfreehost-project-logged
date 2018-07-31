@@ -10,6 +10,11 @@
 *
 **/
 
+if(!isset($config_is_loaded)){
+	header("Location: /");
+	exit;
+}
+
 if(session_status() == PHP_SESSION_NONE){
     die('<h2>Anti-CSRF : Session MUST BE STARTED first!</h2>');
 }

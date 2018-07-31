@@ -3,6 +3,11 @@
 $inc_config = true;
 require_once 'config.logged.php';
 
+# MessageAPI
+    if(!isset($_SESSION['showMsg'])){
+        $_SESSION['showMsg'] = array();
+    }
+
 /* POST Logic */
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -26,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['showMsg'][] = '[TYPE:DANGER]Something\'s not right...<br/>Try again?';
     }
 
-    if(!$_SESSION['showMsg']){
+    if($_SESSION['showMsg']){
 
     	function validateCredentials(){
 
@@ -161,7 +166,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }
 
-$showPage = 'signup';
+$page = 'signup';
 require ROOT.'/view.logged.php';
 
 ?>

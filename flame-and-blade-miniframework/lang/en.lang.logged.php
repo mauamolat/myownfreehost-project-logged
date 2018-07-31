@@ -19,6 +19,7 @@ $lang = array(
     'Login' => 'Login',
     'Signup' => 'Signup',
     'Sign up for a free account' => 'Sign up for a free account',
+    'Login to your account' => 'Login to your account',
     'Email Address' => 'Email Address',
     'Password' => 'Password',
     'Confirm Password' => 'Confirm Password',
@@ -28,10 +29,11 @@ $lang = array(
     'Already have a membership' => 'Already have a membership',
     'your-name' => 'your-name',
     'Enter Captcha' => 'Enter Captcha',
+    'Client Area' => 'Client Area',
 
     # Error & Dynamic Messages
     'Choosen subdomain is too long! 16 characthers maximum.' => 'Choosen subdomain is too long! 16 characthers maximum.',
-    'Choosen subdomain is too short! 3 characthers minimum.' => 'Choosen subdomain is too short! 3 characthers minimum.',
+    'Choosen subdomain is too short! 4 characthers minimum.' => 'Choosen subdomain is too short! 4 characthers minimum.',
     'Please enter a valid domain name' => 'Please enter a valid domain name',
     'Please enter a valid email.' => 'Please enter a valid email.',
     'Password is too long! 25 characthers maximum.' => 'Password is too long! 25 characthers maximum.',

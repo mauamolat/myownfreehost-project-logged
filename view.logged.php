@@ -4,8 +4,14 @@ if(!isset($config_is_loaded)){
 	header("Location: /");
 }
 
-if(!isset($title)){
+if(!isset($page)){
+	$title = $lang["Client Area"];
+}elseif($page == 'login'){
+	$title = $lang["Login to your account"];
+}elseif($page == 'signup'){
 	$title = $lang["Sign up for a free account"];
+}else{
+	$title = $lang["Client Area"];
 }
 
 echo '<!DOCTYPE html>
@@ -33,7 +39,7 @@ echo '<!DOCTYPE html>
 	                </a>
 	            </div>'.PHP_EOL;
 
-if($showPage == 'signup'){
+if($page == 'signup'){
 
 	if($config['Enable MILD API'] AND ($mild_api['Type'] == 'PRIVATE' OR $mild_api['Type'] == 'DEVELOPEMENT')){
 		$form_action = '/signup';
@@ -159,7 +165,7 @@ echo '			</div>
 
 			echo '				var lang = {
 					subTooLong : "'.$lang['Choosen subdomain is too long! 16 characthers maximum.'].'",
-					subTooShort : "'.$lang['Choosen subdomain is too short! 3 characthers minimum.'].'",
+					subTooShort : "'.$lang['Choosen subdomain is too short! 4 characthers minimum.'].'",
 					invalidDomainName : "'.$lang['Please enter a valid domain name'].'",
 					contrags : "'.$lang['Contragulations!'].'",
 					isAvailable : "'.$lang['is available!'].'",

@@ -19,6 +19,11 @@
 *	WARNING : BLADE/CSS Needs to be loaded first.
 **/
 
+if(!isset($config_is_loaded)){
+	header("Location: /");
+	exit;
+}
+
 function showMessage(){
 
 	if(isset($_SESSION['showMsg']) && !empty($_SESSION['showMsg']) && is_array($_SESSION['showMsg'])){
