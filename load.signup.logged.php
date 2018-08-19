@@ -31,7 +31,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $_SESSION['showMsg'][] = '[TYPE:DANGER]Something\'s not right...<br/>Try again?';
     }
 
-    if($_SESSION['showMsg']){
+    if(!$_SESSION['showMsg']){
 
     	function validateCredentials(){
 
@@ -165,6 +165,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 
 }
+
+#var_dump($_POST);
 
 $page = 'signup';
 require ROOT.'/view.logged.php';

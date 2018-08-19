@@ -1,7 +1,9 @@
 <?php
 
-if(!isset($config_is_loaded) && $config_is_loaded !== true){
-    header("Location: /");
+/* Check if core was accessed directly */
+if(!isset($include_core)){
+    header("HTTP/1.0 403 Forbidden"); 
+    die("403 Forbidden.");
 }
 
 /* 
@@ -18,6 +20,8 @@ $lang = array(
     'Create New Account' => 'Create New Account',
     'Login' => 'Login',
     'Signup' => 'Signup',
+    'Terms of Service' => 'Terms of Service',
+    'Privacy Policy' => 'Privacy Policy',
     'Sign up for a free account' => 'Sign up for a free account',
     'Login to your account' => 'Login to your account',
     'Email Address' => 'Email Address',

@@ -21,14 +21,18 @@ if(session_status() == PHP_SESSION_NONE){
 
 class csrf
 {
+
+	private function session_valid_id(){
+	    return preg_match('/^[-,a-zA-Z0-9]{1,128}$/', session_id()) > 0;
+	}
 	
-	function createToken($for){
+	public function createToken($for){
 
 		if(!isset($_SESSION[$for.'_token'])){
 			$_SESSION[$for.'_token'] = md5(uniqid(microtime(), true).rand(100,1000));
 		}
 
-		if(!isset($_COOKIE['PHPSESSID'])){
+		if(!$this->session_valid_id()){
 			return 'COOKIES_NOT_ENABLED';
 		}
 
@@ -36,11 +40,11 @@ class csrf
 
 	}
 
-	function reissueToken($for){
+	public function reissueToken($for){
 
 		$_SESSION[$for.'_token'] = md5(uniqid(microtime(), true).rand(100,1000));
 
-		if(!isset($_COOKIE['PHPSESSID'])){
+		if(!$this->session_valid_id()){
 			return 'COOKIES_NOT_ENABLED';
 		}
 		
@@ -48,7 +52,7 @@ class csrf
 
 	}	
 
-	function validateToken($for){
+	public function validateToken($for){
 
 		if(!isset($_COOKIE['PHPSESSID'])){
 			$_SESSION['showMsg'][] = '[TYPE:DANGER]Cookies must be enabled in order to continue.';
@@ -66,7 +70,5 @@ class csrf
 	}
 
 }
-
-$csrf = new csrf;
 
 ?>
